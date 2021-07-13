@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   define: { 'process.env': {} },
-  /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
   resolve: {
     extensions: [
       '.js',
@@ -17,5 +16,4 @@ export default defineConfig({
       '.vue',
     ]
   },
-  */
 })
