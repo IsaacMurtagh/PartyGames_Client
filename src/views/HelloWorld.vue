@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <router-link to="/test">to test</router-link>
+    {{  }}
   </v-container>
 </template>
 

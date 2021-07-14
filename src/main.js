@@ -13,6 +13,4 @@ app
   .use(store)
   .use(VueAxios, axios)
   
-
-
 app.mount('#app')

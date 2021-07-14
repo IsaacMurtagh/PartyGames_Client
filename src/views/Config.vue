@@ -1,10 +1,10 @@
 <template>
   <div>
-    {{ config }}
+    <pre>{{ config }}</pre>
   </div>
 </template>
 <script>
-import config from '../config.json';
+import config from '../config';
 
 export default {
   computed: {
