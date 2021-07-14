@@ -1,0 +1,4 @@
+{
+  "ENV": "development",
+  "BASE_URL": "https://922j44zrf0.execute-api.ap-southeast-2.amazonaws.com/api"
+}
