@@ -2,26 +2,14 @@
   <pre>{{ user }}</pre>
 </template>
 <script>
-import config from '../config'
+
+import { mapState } from 'vuex';
 
 export default {
   name: 'Test',
-  data() {
-    return {
-      user: undefined,
-    }
-  },
 
-  created() {
-    this.createUser()
+  computed: {
+    ...mapState('app', ['user'])
   },
-
-  methods: {
-    createUser() {
-      this.axios.post(`${config.BASE_URL}/users`).then(response => {
-        this.user = response;
-      })
-    }
-  }
 }
 </script>
