@@ -1,8 +1,11 @@
-import { createStore } from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 import apiClient from '../apiClient';
 import app from '../stores/app';
 
-const store = createStore({
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
   modules: {
     app: app({ apiClient }),
   },
