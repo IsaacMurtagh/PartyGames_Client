@@ -1,21 +1,23 @@
 <template>
-  <main-app-bar />
-  <v-container class="h-full">
-    <v-row class="h-1/2">
-      <v-col align="center" class="pa-12">
-        <v-sheet height="100%">
-          <v-btn block class="h-full" @click="$router.push('/create-game')"> Create a Game </v-btn>
-        </v-sheet>
-      </v-col>
-    </v-row>
-    <v-row class="h-1/2">
-      <v-col align="center" class="pa-12">
-        <v-sheet height="100%">
-          <v-btn block class="h-full" @click="$router.push('/join-game')"> Join a Game </v-btn>
-        </v-sheet>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div>
+    <main-app-bar />
+    <v-container class="h-full">
+      <v-row class="h-1/2">
+        <v-col align="center" class="pa-12">
+          <v-sheet height="100%">
+            <v-btn block class="h-full" @click="$router.push('/create-game')"> Create a Game </v-btn>
+          </v-sheet>x
+        </v-col>
+      </v-row>
+      <v-row class="h-1/2">
+        <v-col align="center" class="pa-12">
+          <v-sheet height="100%">
+            <v-btn block class="h-full" @click="$router.push('/join-game')"> Join a Game </v-btn>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>

@@ -1,6 +1,8 @@
 <template>
-  <main-app-bar />
-  create game page
+  <div>
+    <main-app-bar />
+    create game page
+  </div>
 </template>
 <script>
 import MainAppBar from '../components/MainAppBar';

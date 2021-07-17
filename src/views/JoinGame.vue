@@ -1,6 +1,8 @@
 <template>
-  <main-app-bar />
-  Join game page
+  <div>
+    <main-app-bar />
+    Join game page
+  </div>
 </template>
 <script>
 import MainAppBar from '../components/MainAppBar';

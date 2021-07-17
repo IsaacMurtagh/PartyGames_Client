@@ -1,35 +1,21 @@
-import { createWebHistory, createRouter } from "vue-router";
-import Dashboard from "../views/Dashboard";
-import CreateGame from "../views/CreateGame";
-import JoinGame from "../views/JoinGame";
-import Config from "../views/Config";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Dashboard from '../views/Dashboard'
+
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Dashboard",
-    component: Dashboard,
+    path: '/',
+    name: 'Dashboard',
+    component: Dashboard
   },
-  {
-    path: "/config",
-    name: "Config",
-    component: Config,
-  },
-  {
-    path: "/create-game",
-    name: "Create a game",
-    component: CreateGame,
-  },
-  {
-    path: "/join-game",
-    name: "Join a game",
-    component: JoinGame,
-  },
-];
+]
 
-const router = createRouter({
-  history: createWebHistory('/'),
-  routes,
-});
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
 
-export default router;
+export default router
