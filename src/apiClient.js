@@ -4,6 +4,7 @@ import config from './config'
 const axiosClient = axios.create({
   baseURL: config.BASE_URL,
   timeout: 3000,
+  headers: { 'Content-Type': 'text/plain' }
 });
 
 export default {
@@ -13,5 +14,9 @@ export default {
 
   getUser(userId) {
     return axiosClient.get(`/users/${userId}`);
+  },
+
+  createGame({ name, type, allowNicknames, userId }) {
+    return axiosClient.post('/games',  { name, type, allowNicknames, userId });
   }
 }

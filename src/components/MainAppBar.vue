@@ -1,17 +1,34 @@
 <template>
   <div>
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      temporary
-    >
-    </v-navigation-drawer>
-    
-    <v-app-bar app >
+    <v-app-bar app>
       <v-app-bar-title @click="$router.push('/')">Party Games</v-app-bar-title>
       <v-spacer />
-      <!-- <v-app-bar-nav-icon right @click="drawer = !drawer" /> -->
+      <v-app-bar-nav-icon right @click="drawer = !drawer" />
     </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" app>
+      <v-list>
+        <v-list-item-group>
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            @click="goToRoute(item.route)"
+          >
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item-content>
+
+            <v-list-item-action>
+              <v-icon v-text="'mdi-chevron-right'"></v-icon>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 <script>
@@ -19,6 +36,34 @@ export default {
   data() {
     return {
       drawer: false,
+      items: [
+        {
+          icon: 'mdi-inbox',
+          text: 'Home',
+          route: '/'
+        },
+        {
+          icon: 'mdi-inbox',
+          text: 'Create game',
+          route: '/create-game'
+        },
+        {
+          icon: 'mdi-star',
+          text: 'Join game',
+          route: '/join-game'
+        },
+      ],
+      selected: this.$route.path,
+    }
+  },
+
+  methods: {
+    async goToRoute(route) {
+      this.drawer = false;
+      const currentRoute = (this.$route.path != '/' ? this.$route.path.replace(/\/$/, "") : '/');
+      if (currentRoute != route) {
+        this.$router.push(route);
+      }
     }
   }
 }
