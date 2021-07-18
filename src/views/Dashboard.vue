@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="h-full pb-12">
     <main-app-bar />
-    <v-container class="h-full">
-      <v-row class="h-1/2">
-        <v-col align="center" class="pa-12">
-          <v-sheet height="100%">
-            <v-btn block class="h-full" @click="$router.push('/create-game')"> Create a Game </v-btn>
-          </v-sheet>x
+    <v-container fill-height class="pt-8">
+      <v-row class="h-1/2 hide-overflow">
+        <v-col align="center" class="">
+          <v-sheet class="h-full">
+            <v-btn block tile x-large class="h-full" @click="$router.push('/create-game')"> Create a Game </v-btn>
+          </v-sheet>
         </v-col>
       </v-row>
       <v-row class="h-1/2">
-        <v-col align="center" class="pa-12">
-          <v-sheet height="100%">
-            <v-btn block class="h-full" @click="$router.push('/join-game')"> Join a Game </v-btn>
+        <v-col align="center" class="">
+          <v-sheet class="h-full">
+            <v-btn block tile x-large class="h-full" @click="$router.push('/join-game')"> Join a Game </v-btn>
           </v-sheet>
         </v-col>
       </v-row>
@@ -33,7 +33,7 @@ export default {
 <style scoped>
 
 .h-full {
-  height: 100%
+  height: 100% !important;
 }
 
 .h-1\/2 {

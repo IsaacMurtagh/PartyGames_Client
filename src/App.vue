@@ -16,3 +16,8 @@ export default {
   }
 }
 </script>
+<style>
+div > .v-application--wrap {
+  min-height: 80vh;
+}
+</style>
