@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard'
 import CreateGame from '../views/CreateGame'
 import JoinGame from '../views/JoinGame'
-import GameScreen from '../views/play/GameScreen'
+import GameScreen from '../views/GameScreen'
 
 Vue.use(VueRouter)
 

@@ -6,15 +6,21 @@ function createStore({ apiClient }) {
     namespaced: true,
 
     state: () => ({
-      game: null,
+      game: {},
       initError: null,
+      createGameError: null,
       selfPlayer: null,
       createGameLoading: false,
+      initGameLoading: true,
     }),
 
     mutations: {
       setInitError(state, value) {
         state.initError = value;
+      },
+
+      setCreateGameError(state, value) {
+        state.createGameError = value;
       },
 
       setGame(state, value) {
@@ -27,6 +33,10 @@ function createStore({ apiClient }) {
 
       setCreateGameLoading(state, value) {
         state.createGameLoading = value;
+      },
+
+      setInitGameLoading(state, value) {
+        state.initGameLoading = value;
       }
     },
 
@@ -44,10 +54,29 @@ function createStore({ apiClient }) {
           commit('setSelfPlayer', new Player(response.data.self));
         })
         .catch(error => {
-          commit('setInitError', error);
+          commit('setCreateGameError', error);
         });
         commit('setCreateGameLoading', false);
       },
+
+      async getGame({ commit, state }, gameId) {
+        if (state.game.id == gameId) {
+          return;
+        }
+        
+        await apiClient.getGame(gameId)
+        .then(response => {
+          commit('setGame', new Game(response.data));
+        })
+        .catch(error => {
+          commit('setCreateGameError', error);
+        });
+      },
+
+      async init({ commit, dispatch }, gameId) {
+        await dispatch('getGame', gameId);
+        commit('setInitGameLoading', false);
+      }
     },
   };
 }
