@@ -1,5 +1,4 @@
 import Game from '@/models/Game';
-import Player from '@/models/Player';
 
 function createStore({ apiClient }) {
   return {
@@ -9,7 +8,6 @@ function createStore({ apiClient }) {
       game: {},
       initError: null,
       createGameError: null,
-      selfPlayer: null,
       createGameLoading: false,
       initGameLoading: true,
     }),
@@ -25,10 +23,6 @@ function createStore({ apiClient }) {
 
       setGame(state, value) {
         state.game = value;
-      },
-
-      setSelfPlayer(state, value) {
-        state.selfPlayer = value;
       },
 
       setCreateGameLoading(state, value) {
@@ -50,8 +44,7 @@ function createStore({ apiClient }) {
           userId: rootState.app.user.id
         })
         .then(response => {
-          commit('setGame', new Game(response.data.game));
-          commit('setSelfPlayer', new Player(response.data.self));
+          commit('setGame', new Game(response.data));
         })
         .catch(error => {
           commit('setCreateGameError', error);
