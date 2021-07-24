@@ -39,13 +39,9 @@ function createStore({ config }) {
         dispatch('handleOnDisconnect');
       },
 
-      handleOnConnect({ state, dispatch, rootState, rootGetters, commit }) {
+      handleOnConnect({ state, dispatch, rootState }) {
         state.connection.onopen = function() {
-          commit('game/addParticipant', new Player({
-            alias: rootState.app.user.alias,
-            displayName: rootGetters['game/myDisplayName'],
-            active: true,
-          }), { root: true });
+          dispatch('game/addSelfToParticipants', null, { root: true });
           dispatch('game/getGame', rootState.game.game.id, { root: true });
         }
       },

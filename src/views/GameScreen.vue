@@ -32,7 +32,7 @@ export default {
 
   computed: {
     ...mapState('game', ['game', 'initGameLoading', 'initError']),
-    ...mapGetters('game', ['myDisplayName']),
+    ...mapGetters('game', ['myDisplayName', 'myPlayer']),
     ...mapState('app', ['user']),
     ...mapState('webSocket', ['messages']),
 
@@ -57,6 +57,9 @@ export default {
 
   async created() {
     await this.$store.dispatch('game/init', this.$route.params.gameId);
+    if (this.myPlayer) {
+      this.$store.dispatch('game/addSelfToParticipants');
+    }
     if (!this.initError && this.myDisplayName) {
       this.createWebsocketConnection();
     }

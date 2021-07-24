@@ -1,5 +1,6 @@
-import Game from '@/models/Game';
 import Vue from 'vue';
+import Game from '@/models/Game';
+import Player from '@/models/Player';
 
 function createStore({ apiClient }) {
   return {
@@ -65,6 +66,14 @@ function createStore({ apiClient }) {
     },
 
     actions: {
+
+      addSelfToParticipants({ commit, rootState, getters }) {
+        commit('addParticipant', new Player({
+          alias: rootState.app.user.alias,
+          displayName: getters.myDisplayName,
+          active: true,
+        }))
+      },
 
       async createGame({ commit, rootState }, { name, type }) {
         commit('setCreateGameLoading', true);
