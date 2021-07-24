@@ -5,12 +5,28 @@ function createStore({ apiClient }) {
     namespaced: true,
 
     state: () => ({
-      game: {},
+      game: null,
       initError: null,
       createGameError: null,
       createGameLoading: false,
       initGameLoading: true,
+      chosenDisplayName: null,
     }),
+
+    getters: {
+      participantsAsList(state) {
+        return Object.values(state.game.participants);
+      },
+
+      myPlayer(state, getters, rootState) {
+        const myAlias = rootState.app.user.alias;
+        return state.game?.participants[myAlias];
+      },
+
+      myDisplayName(state, getters) {
+        return getters.myPlayer?.displayName || state.chosenDisplayName;
+      }
+    },
 
     mutations: {
       setInitError(state, value) {
@@ -31,6 +47,19 @@ function createStore({ apiClient }) {
 
       setInitGameLoading(state, value) {
         state.initGameLoading = value;
+      },
+
+      addParticipant(state, value) {
+        const key = value.alias;
+        state.game.participants[key] = value;
+      },
+
+      removeParticipantByAlias(state, value) {
+        delete(state.game.participants[value]);
+      },
+
+      setChosenDisplayName( state, value) {
+        state.chosenDisplayName = value;
       }
     },
 
@@ -44,7 +73,7 @@ function createStore({ apiClient }) {
           userId: rootState.app.user.id
         })
         .then(response => {
-          commit('setGame', new Game(response.data));
+          commit('setGame', Game.fromApiResponse(response.data));
         })
         .catch(error => {
           commit('setCreateGameError', error);
@@ -52,23 +81,29 @@ function createStore({ apiClient }) {
         commit('setCreateGameLoading', false);
       },
 
-      async getGame({ commit, state }, gameId) {
-        if (state.game.id == gameId) {
-          return;
-        }
-        
+      async getGame({ commit }, gameId) {
         await apiClient.getGame(gameId)
         .then(response => {
-          commit('setGame', new Game(response.data));
+          commit('setGame', Game.fromApiResponse(response.data));
         })
         .catch(error => {
           commit('setCreateGameError', error);
         });
       },
 
-      async init({ commit, dispatch }, gameId) {
-        await dispatch('getGame', gameId);
+      async init({ commit, dispatch, state }, gameId) {
+        commit('setInitGameLoading', true);
+        if (state.game?.id != gameId) {
+          await dispatch('getGame', gameId);
+        }
         commit('setInitGameLoading', false);
+      },
+
+      resetGameState({ commit }) {
+        commit('setGame', null);
+        commit('setChosenDisplayName', null);
+        commit('setInitError', null);
+        commit('setCreateGameError', null);
       }
     },
   };
