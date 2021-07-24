@@ -9,7 +9,7 @@
     />
 
     <choose-display-name 
-      :display="!myDisplayName"
+      :display="!initGameLoading && !myDisplayName"
       @chosen-display-name="setDisplayName"
     />
   </div>
@@ -69,7 +69,6 @@ export default {
 
   methods: {
     handleOnMessage(event) {
-      console.log(event);
       this.messages.push(event.data);
     },
 
@@ -77,7 +76,7 @@ export default {
       this.$store.dispatch('webSocket/createConnection', {
         gameId: this.game.id,
         userId: this.user.id,
-        displayName: this.displayName,
+        displayName: this.myDisplayName,
       });
     },
 

@@ -1,4 +1,5 @@
 import Game from '@/models/Game';
+import Vue from 'vue';
 
 function createStore({ apiClient }) {
   return {
@@ -15,7 +16,7 @@ function createStore({ apiClient }) {
 
     getters: {
       participantsAsList(state) {
-        return Object.values(state.game.participants);
+        return state.game ? Object.values(state.game.participants).filter(p => p.active) : [];
       },
 
       myPlayer(state, getters, rootState) {
@@ -51,11 +52,11 @@ function createStore({ apiClient }) {
 
       addParticipant(state, value) {
         const key = value.alias;
-        state.game.participants[key] = value;
+        Vue.set(state.game.participants, key, value);
       },
 
       removeParticipantByAlias(state, value) {
-        delete(state.game.participants[value]);
+        Vue.set(state.game.participants[value], 'active', false);
       },
 
       setChosenDisplayName( state, value) {

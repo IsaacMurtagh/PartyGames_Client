@@ -28,16 +28,24 @@ function createStore({ config }) {
         }
       },
 
-      createConnection({ dispatch, commit }, { userId, gameId }) {
-        const connection = new WebSocket(`${config.WEBSOCKET_BASE_URL}?gameId=${gameId}&userId=${userId}`);
+      createConnection({ dispatch, commit, state }, { userId, gameId, displayName }) {
+        if (state.connection) {
+          return;
+        }
+        const connection = new WebSocket(`${config.WEBSOCKET_BASE_URL}?gameId=${gameId}&userId=${userId}&displayName=${displayName}`);
         commit('setConnection', connection);
         dispatch('handleOnConnect');
         dispatch('handleOnMessage');
         dispatch('handleOnDisconnect');
       },
 
-      handleOnConnect({ state, dispatch, rootState }) {
+      handleOnConnect({ state, dispatch, rootState, rootGetters, commit }) {
         state.connection.onopen = function() {
+          commit('game/addParticipant', new Player({
+            alias: rootState.app.user.alias,
+            displayName: rootGetters['game/myDisplayName'],
+            active: true,
+          }), { root: true });
           dispatch('game/getGame', rootState.game.game.id, { root: true });
         }
       },

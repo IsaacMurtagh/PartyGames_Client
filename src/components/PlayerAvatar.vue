@@ -5,7 +5,7 @@
         mdi-account-circle
       </v-icon>
     </v-avatar>
-    <div><h4>{{ player.alias }}</h4></div>
+    <div><h4>{{ player.displayName }}</h4></div>
   </div>
 </template>
 <script>
