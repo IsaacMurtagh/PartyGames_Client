@@ -5,7 +5,7 @@ function createStore({ apiClient }) {
     namespaced: true,
 
     state: () => ({
-      game: {},
+      game: null,
       initError: null,
       createGameError: null,
       createGameLoading: false,
@@ -31,6 +31,15 @@ function createStore({ apiClient }) {
 
       setInitGameLoading(state, value) {
         state.initGameLoading = value;
+      },
+
+      addParticipant(state, value) {
+        const key = value.alias;
+        state.game.participants[key] = value;
+      },
+
+      removeParticipantByAlias(state, value) {
+        delete(state.game.participants[value]);
       }
     },
 
@@ -44,7 +53,7 @@ function createStore({ apiClient }) {
           userId: rootState.app.user.id
         })
         .then(response => {
-          commit('setGame', new Game(response.data));
+          commit('setGame', Game.fromApiResponse(response.data));
         })
         .catch(error => {
           commit('setCreateGameError', error);
@@ -52,22 +61,20 @@ function createStore({ apiClient }) {
         commit('setCreateGameLoading', false);
       },
 
-      async getGame({ commit, state }, gameId) {
-        if (state.game.id == gameId) {
-          return;
-        }
-        
+      async getGame({ commit }, gameId) {
         await apiClient.getGame(gameId)
         .then(response => {
-          commit('setGame', new Game(response.data));
+          commit('setGame', Game.fromApiResponse(response.data));
         })
         .catch(error => {
           commit('setCreateGameError', error);
         });
       },
 
-      async init({ commit, dispatch }, gameId) {
-        await dispatch('getGame', gameId);
+      async init({ commit, dispatch, state }, gameId) {
+        if (state.game?.id != gameId) {
+          await dispatch('getGame', gameId);
+        }
         commit('setInitGameLoading', false);
       }
     },

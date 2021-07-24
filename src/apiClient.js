@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import config from './config'
 
 const axiosClient = axios.create({
@@ -6,6 +7,8 @@ const axiosClient = axios.create({
   timeout: 3000,
   headers: { 'Content-Type': 'text/plain' }
 });
+
+axiosRetry(axiosClient, { retries: 3 });
 
 export default {
   createUser() {
