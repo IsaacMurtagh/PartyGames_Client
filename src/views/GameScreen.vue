@@ -1,52 +1,88 @@
 <template>
   <div>
-    <div v-if="!game">
-      no game
-    </div>
-    <div v-else>
-      <pre>{{ game }}</pre>
-      <pre> {{ messages }}</pre>
-    </div>
+    <game-app-bar
+      :game-name="gameName"
+    />
+
+    <component
+      :is="currentComponent"
+    />
+
+    <choose-display-name 
+      :display="!myDisplayName"
+      @chosen-display-name="setDisplayName"
+    />
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
+import Lobby from './play/Lobby';
+import Loading from '@/components/Loading';
+import GameAppBar from '@/components/GameAppBar';
+import ChooseDisplayName from '@/components/ChooseDisplayName';
 
 export default {
   name: 'GameScreen',
+  components: {
+    Loading,
+    GameAppBar,
+    Lobby,
+    ChooseDisplayName,
+  },
 
   computed: {
     ...mapState('game', ['game', 'initGameLoading', 'initError']),
+    ...mapGetters('game', ['myDisplayName']),
     ...mapState('app', ['user']),
     ...mapState('webSocket', ['messages']),
 
     currentComponent() {
       if (this.initGameLoading) {
-        return 'loadingScreen';
+        return 'Loading';
       }
 
       return 'Lobby'
+    },
+
+    gameName() {
+      return this.game?.name || '';
+    }
+  },
+
+  watch: {
+    myDisplayName() {
+      this.createWebsocketConnection();
     }
   },
 
   async created() {
     await this.$store.dispatch('game/init', this.$route.params.gameId);
-    if (!this.initError) {
-      this.$store.dispatch('webSocket/createConnection', {
-        gameId: this.game.id,
-        userId: this.user.id,
-      });
+    if (!this.initError && this.myDisplayName) {
+      this.createWebsocketConnection();
     }
   },
 
   destroyed() {
     this.$store.dispatch('webSocket/destroyConnection');
+    this.$store.dispatch('game/resetGameState');
   },
 
   methods: {
     handleOnMessage(event) {
       console.log(event);
       this.messages.push(event.data);
+    },
+
+    createWebsocketConnection() {
+      this.$store.dispatch('webSocket/createConnection', {
+        gameId: this.game.id,
+        userId: this.user.id,
+        displayName: this.displayName,
+      });
+    },
+
+    setDisplayName(displayName) {
+      this.$store.commit('game/setChosenDisplayName', displayName);
     }
   }
 }

@@ -10,7 +10,23 @@ function createStore({ apiClient }) {
       createGameError: null,
       createGameLoading: false,
       initGameLoading: true,
+      chosenDisplayName: null,
     }),
+
+    getters: {
+      participantsAsList(state) {
+        return Object.values(state.game.participants);
+      },
+
+      myPlayer(state, getters, rootState) {
+        const myAlias = rootState.app.user.alias;
+        return state.game?.participants[myAlias];
+      },
+
+      myDisplayName(state, getters) {
+        return getters.myPlayer?.displayName || state.chosenDisplayName;
+      }
+    },
 
     mutations: {
       setInitError(state, value) {
@@ -40,6 +56,10 @@ function createStore({ apiClient }) {
 
       removeParticipantByAlias(state, value) {
         delete(state.game.participants[value]);
+      },
+
+      setChosenDisplayName( state, value) {
+        state.chosenDisplayName = value;
       }
     },
 
@@ -72,10 +92,18 @@ function createStore({ apiClient }) {
       },
 
       async init({ commit, dispatch, state }, gameId) {
+        commit('setInitGameLoading', true);
         if (state.game?.id != gameId) {
           await dispatch('getGame', gameId);
         }
         commit('setInitGameLoading', false);
+      },
+
+      resetGameState({ commit }) {
+        commit('setGame', null);
+        commit('setChosenDisplayName', null);
+        commit('setInitError', null);
+        commit('setCreateGameError', null);
       }
     },
   };
