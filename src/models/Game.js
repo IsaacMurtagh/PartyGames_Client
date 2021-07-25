@@ -28,6 +28,10 @@ class Game {
       participants: transformParticipantsToMap(data.participants),
     })
   }
+
+  get inProgress() {
+    return this.status == 'inprogress';
+  }
 }
 
 export default Game;

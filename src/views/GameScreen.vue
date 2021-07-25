@@ -9,7 +9,7 @@
     />
 
     <choose-display-name 
-      :display="!initGameLoading && !myDisplayName"
+      :display="game && !myDisplayName"
       @chosen-display-name="setDisplayName"
     />
   </div>
@@ -17,6 +17,8 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import Lobby from './play/Lobby';
+import Rounds from './play/Rounds';
+import GameNotFound from './play/GameNotFound';
 import Loading from '@/components/Loading';
 import GameAppBar from '@/components/GameAppBar';
 import ChooseDisplayName from '@/components/ChooseDisplayName';
@@ -28,6 +30,8 @@ export default {
     GameAppBar,
     Lobby,
     ChooseDisplayName,
+    Rounds,
+    GameNotFound,
   },
 
   computed: {
@@ -40,7 +44,12 @@ export default {
       if (this.initGameLoading) {
         return 'Loading';
       }
-
+      if (this.initError) {
+        return 'GameNotFound';
+      }
+      if(this.game.inprogress) {
+        return 'Rounds'
+      }
       return 'Lobby'
     },
 

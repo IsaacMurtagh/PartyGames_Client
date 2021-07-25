@@ -29,9 +29,6 @@ function createStore({ apiClient }) {
         return getters.myPlayer?.displayName || state.chosenDisplayName;
       },
 
-      gameInProgress(state) {
-        return state.game?.status == 'inprogress';
-      }
     },
 
     mutations: {
@@ -105,7 +102,7 @@ function createStore({ apiClient }) {
           commit('setGame', Game.fromApiResponse(response.data));
         })
         .catch(error => {
-          commit('setCreateGameError', error);
+          commit('setInitError', error);
         });
       },
 

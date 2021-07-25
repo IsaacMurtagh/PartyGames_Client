@@ -14,7 +14,7 @@
 
       <v-row justify="center">
         <v-col align="center" class="col-md-8">
-          <v-form ref="form">
+          <v-form ref="form" @submit="createGame">
             <v-card class="pa-4" align="left" elevation="1">
                 <div class="subtitle-2 pb-2 d-flex justify-space-between align-center"> 
                   <div>Game Type: Would You Rather</div>
@@ -44,7 +44,7 @@
                 />
             </v-card>
             <v-col>
-              <v-btn width="66%" type="submit" :loading="createGameLoading" class="block" @click="createGame">
+              <v-btn width="66%" type="submit" :loading="createGameLoading" class="block">
                 Continue
               </v-btn>
             </v-col>

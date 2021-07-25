@@ -5,7 +5,7 @@
       persistent
       width="550"
     >
-      <v-form ref="form">
+      <v-form ref="form" @submit="chosenDisplayName">
         <v-card align="center">
           <v-card-title class="text-h5 justify-center" >
             <h3>Choose your name</h3>
@@ -39,7 +39,6 @@
             </v-btn>
             <v-btn
               color="primary"
-              @click="chosenDisplayName"
               class="mx-4"
             >
               Continue
