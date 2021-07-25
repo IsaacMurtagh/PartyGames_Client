@@ -6,8 +6,14 @@ function createStore({ config }) {
 
     state: () => ({
       connection: null,
-      messages: [],
+
     }),
+
+    getters: {
+      connected(state) {
+        return !!state.connection?.OPEN
+      }
+    },
 
     mutations: {
       setConnection(state, value) {
@@ -41,6 +47,7 @@ function createStore({ config }) {
 
       handleOnConnect({ state, dispatch, rootState }) {
         state.connection.onopen = function() {
+
           dispatch('game/addSelfToParticipants', null, { root: true });
           dispatch('game/getGame', rootState.game.game.id, { root: true });
         }
@@ -63,9 +70,18 @@ function createStore({ config }) {
             case 'PLAYER_LEFT':
               commit('game/removeParticipantByAlias', data.alias, { root: true });
               break;
+            case 'GAME_STARTED':
+              commit('game/setGameInProgress', null, { root: true });
+              break;
           }
-          console.log({ data, message })
+            console.log({ data, message });
         };
+      },
+
+      startGame({ state }) {
+        state.connection.send(JSON.stringify({
+          action: 'startgame',
+        }));
       }
     },
   };

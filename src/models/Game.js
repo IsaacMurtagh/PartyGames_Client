@@ -17,6 +17,7 @@ class Game {
     this.participants = props.participants;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
+    this.status = props.status;
   }
 
   static fromApiResponse(data) {

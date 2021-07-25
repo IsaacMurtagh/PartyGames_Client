@@ -27,6 +27,10 @@ function createStore({ apiClient }) {
 
       myDisplayName(state, getters) {
         return getters.myPlayer?.displayName || state.chosenDisplayName;
+      },
+
+      gameInProgress(state) {
+        return state.game?.status == 'inprogress';
       }
     },
 
@@ -62,6 +66,10 @@ function createStore({ apiClient }) {
 
       setChosenDisplayName( state, value) {
         state.chosenDisplayName = value;
+      },
+
+      setGameInProgress( state ) {
+        Vue.set(state.game, 'status', 'inprogress');
       }
     },
 
