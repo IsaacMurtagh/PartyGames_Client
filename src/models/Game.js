@@ -18,6 +18,8 @@ class Game {
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.status = props.status;
+    this.numberRounds = props.numberRounds;
+    this.roundTimeSeconds = props.roundTimeSeconds;
   }
 
   static fromApiResponse(data) {
@@ -31,6 +33,14 @@ class Game {
 
   get inProgress() {
     return this.status == 'inprogress';
+  }
+
+  get finished() {
+    return this.status == 'finished';
+  }
+
+  get roundTimeMs() {
+    return this.roundTimeSeconds * 1000;
   }
 }
 

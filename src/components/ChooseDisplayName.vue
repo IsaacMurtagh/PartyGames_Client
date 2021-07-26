@@ -40,6 +40,7 @@
             <v-btn
               color="primary"
               class="mx-4"
+              type="submit"
             >
               Continue
             </v-btn>

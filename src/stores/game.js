@@ -13,6 +13,7 @@ function createStore({ apiClient }) {
       createGameLoading: false,
       initGameLoading: true,
       chosenDisplayName: null,
+      currentRound: null,
     }),
 
     getters: {
@@ -65,9 +66,13 @@ function createStore({ apiClient }) {
         state.chosenDisplayName = value;
       },
 
-      setGameInProgress( state ) {
-        Vue.set(state.game, 'status', 'inprogress');
-      }
+      setGameStatus( state, value ) {
+        Vue.set(state.game, 'status', value);
+      },
+
+      setCurrentRound( state, value ) {
+        state.currentRound = value
+      },
     },
 
     actions: {
