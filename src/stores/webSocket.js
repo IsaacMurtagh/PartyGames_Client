@@ -1,4 +1,5 @@
 import Player from '@/models/Player';
+import Round from '@/models/Round';
 
 function createStore({ config }) {
   return {
@@ -62,7 +63,6 @@ function createStore({ config }) {
       handleOnMessage({ state, commit }) {
         state.connection.onmessage = function(event) {
           const { data, message } = JSON.parse(event.data);
-          state.messages.push(message);
           switch(message) {
             case 'PLAYER_JOINED':
               commit('game/addParticipant', new Player(data), { root: true });
@@ -71,10 +71,16 @@ function createStore({ config }) {
               commit('game/removeParticipantByAlias', data.alias, { root: true });
               break;
             case 'GAME_STARTED':
-              commit('game/setGameInProgress', null, { root: true });
+              commit('game/setGameStatus', 'inprogress', { root: true });
+              break;
+            case 'NEW_ROUND':
+              commit('game/setCurrentRound', new Round(data), { root: true });
+              break;
+            case 'GAME_FINISHED':
+              commit('game/setGameStatus', 'finished', { root: true });
               break;
           }
-            console.log({ data, message });
+          console.log({ data, message });
         };
       },
 
