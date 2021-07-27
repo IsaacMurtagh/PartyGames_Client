@@ -85,6 +85,16 @@ function createStore({ apiClient }) {
         }))
       },
 
+      async makeChoice({ state, rootState }) {
+        const round = state.currentRound;
+        await apiClient.makeChoice({
+          round,
+          userId: rootState.app.user.id
+        }).catch(error => {
+          console.error(error);
+        });
+      },
+
       async createGame({ commit, rootState }, { name, type }) {
         commit('setCreateGameLoading', true);
         await apiClient.createGame({

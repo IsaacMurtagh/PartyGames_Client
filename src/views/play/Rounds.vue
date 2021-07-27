@@ -24,7 +24,11 @@
           :key="choice.id"
           cols="6"
         >
-          <choice-tile :choice="choice" />
+          <choice-tile 
+            :choice="choice" 
+            :disabled="currentRound.choiceMade" 
+            @choice-selected="handleChoiceSelected"
+          />
         </v-col>
       </v-row>
     </div>
@@ -51,7 +55,7 @@ export default {
 
    roomHeader() {
      if (this.currentRound) {
-       return `Round ${this.currentRound.round}/${this.game.numberRounds}`;
+       return `Round ${this.currentRound.roundNumber}/${this.game.numberRounds}`;
      }
      return 'Round starting soon...'
    },
@@ -72,6 +76,13 @@ export default {
 
   destroyed() {
     clearInterval(this.interval);
+  },
+
+  methods: {
+    async handleChoiceSelected() {
+      console.log('posting')
+      await this.$store.dispatch('game/makeChoice');
+    }
   }
 }
 </script>

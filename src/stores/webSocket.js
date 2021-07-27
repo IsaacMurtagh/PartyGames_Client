@@ -77,6 +77,7 @@ function createStore({ config }) {
               commit('game/setCurrentRound', new Round(data), { root: true });
               break;
             case 'GAME_FINISHED':
+              state.connection.disconnect();
               commit('game/setGameStatus', 'finished', { root: true });
               break;
           }

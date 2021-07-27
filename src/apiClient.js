@@ -25,5 +25,12 @@ export default {
 
   getGame(gameId) {
     return axiosClient.get(`/games/${gameId}`);
+  },
+
+  makeChoice({ round, userId}) {
+    return axiosClient.post(`/games/${round.gameId}/round/${round.roundNumber}`,  { 
+      userId,
+      choiceId: round.choiceId
+    });
   }
 }
