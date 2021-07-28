@@ -19,8 +19,8 @@ export default {
     return axiosClient.get(`/users/${userId}`);
   },
 
-  createGame({ name, type, allowNicknames, userId }) {
-    return axiosClient.post('/games',  { name, type, allowNicknames, userId });
+  createGame({ name, type, userId, roundTimeSeconds }) {
+    return axiosClient.post('/games',  { name, type, roundTimeSeconds, userId });
   },
 
   getGame(gameId) {

@@ -20,6 +20,7 @@ class Game {
     this.status = props.status;
     this.numberRounds = props.numberRounds;
     this.roundTimeSeconds = props.roundTimeSeconds;
+    this.summary = props.summary;
   }
 
   static fromApiResponse(data) {

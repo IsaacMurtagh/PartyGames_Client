@@ -47,8 +47,8 @@ function createStore({ config }) {
       },
 
       handleOnConnect({ state, dispatch, rootState }) {
-        state.connection.onopen = function() {
-
+        state.connection.onopen = function(event) {
+          console.log(event);
           dispatch('game/addSelfToParticipants', null, { root: true });
           dispatch('game/getGame', rootState.game.game.id, { root: true });
         }
@@ -60,7 +60,7 @@ function createStore({ config }) {
         }
       },
 
-      handleOnMessage({ state, commit }) {
+      handleOnMessage({ state, commit, dispatch, rootState }) {
         state.connection.onmessage = function(event) {
           const { data, message } = JSON.parse(event.data);
           switch(message) {
@@ -77,8 +77,9 @@ function createStore({ config }) {
               commit('game/setCurrentRound', new Round(data), { root: true });
               break;
             case 'GAME_FINISHED':
-              state.connection.disconnect();
+              state.connection.close();
               commit('game/setGameStatus', 'finished', { root: true });
+              dispatch('game/getGame', rootState.game.game.id, { root: true });
               break;
           }
           console.log({ data, message });

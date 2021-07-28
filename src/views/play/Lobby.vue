@@ -29,9 +29,9 @@
         <player-avatar :player="participant" />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        <v-btn v-if="connected" @click="startGame">
+    <v-row class="pt-12">
+      <v-col align="center">
+        <v-btn v-if="!!myPlayer" @click="startGame">
           Start
         </v-btn>
       </v-col>
@@ -54,7 +54,7 @@ export default {
 
   computed: {
     ...mapState('game', ['game']),
-    ...mapGetters('game', ['participantsAsList']),
+    ...mapGetters('game', ['participantsAsList', 'myPlayer']),
     ...mapGetters('webSocket', ['connected']),
     
     gameType() {

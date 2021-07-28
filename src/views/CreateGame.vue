@@ -90,7 +90,8 @@ export default {
       if (validForm) {
         await this.$store.dispatch('game/createGame', {
           name: this.roomName,
-          type: 'WouldYouRather'
+          type: 'WouldYouRather',
+          roundTimeSeconds: 7,
         });
         this.game && this.$router.push(`/game/${this.game.id}`);
       }

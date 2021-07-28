@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-avatar size="124" :color="avatarColour">
-      <v-icon size="56" dark>
+    <v-avatar :size="large ? '144' : '32'" :color="avatarColour">
+      <v-icon :size="large ? '56' : '24'" dark>
         mdi-account-circle
       </v-icon>
     </v-avatar>
-    <div><h4>{{ player.displayName }}</h4></div>
+    <div ><h4>{{ player.displayName }}</h4></div>
   </div>
 </template>
 <script>
@@ -14,6 +14,7 @@ import stringToNumber from '@/utils/stringToNumber';
 export default {
   props: {
     player: { type: Object, required: true },
+    large: { type: Boolean, default: true },
   },
 
   data() {

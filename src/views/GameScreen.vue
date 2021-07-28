@@ -90,7 +90,7 @@ export default {
     },
 
     createWebsocketConnection() {
-      this.$store.dispatch('webSocket/createConnection', {
+      !this.game.finished && this.$store.dispatch('webSocket/createConnection', {
         gameId: this.game.id,
         userId: this.user.id,
         displayName: this.myDisplayName,
