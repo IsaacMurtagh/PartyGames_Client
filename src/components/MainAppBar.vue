@@ -38,17 +38,17 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'mdi-inbox',
+          icon: 'mdi-home',
           text: 'Home',
           route: '/'
         },
         {
-          icon: 'mdi-inbox',
+          icon: 'mdi-pencil',
           text: 'Create game',
           route: '/create-game'
         },
         {
-          icon: 'mdi-star',
+          icon: 'mdi-account-multiple-plus',
           text: 'Join game',
           route: '/join-game'
         },
