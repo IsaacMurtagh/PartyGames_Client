@@ -95,12 +95,13 @@ function createStore({ apiClient }) {
         });
       },
 
-      async createGame({ commit, rootState }, { name, type, roundTimeSeconds }) {
+      async createGame({ commit, rootState }, { name, type, roundTimeSeconds, numberRounds }) {
         commit('setCreateGameLoading', true);
         await apiClient.createGame({
           name,
           type,
           roundTimeSeconds,
+          numberRounds,
           userId: rootState.app.user.id
         })
         .then(response => {

@@ -22,9 +22,9 @@
           v-for="choice in roundResult.choices"
           :key="choice.id"
         >
-          <h3>{{ choice.description }}</h3>
+          <h2>{{ choice.description }}</h2>
           <playerAvatar 
-            class="d-inline-block"
+            class="d-inline-block pr-2"
             v-for="alias in choice.votes"
             :key="alias"
             :player="game.participants[alias]"

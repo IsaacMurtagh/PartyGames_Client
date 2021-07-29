@@ -19,7 +19,7 @@ export default {
 
   data() {
     return {
-      avatarColours: [ 'red', 'green', 'blue', 'pink', 'orange', 'indigo', 'brown', 'yellow', 'teal', 'cyan', 'black', ]
+      avatarColours: [ 'red', 'green', 'blue', 'pink', 'orange', 'indigo', 'brown', 'yellow', 'teal', 'cyan', 'purple' ]
     }
   },
 

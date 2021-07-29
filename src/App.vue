@@ -16,7 +16,14 @@ export default {
   },
 
   created() {
+    this.$vuetify.theme.dark = this.isDarkModeEnabled()
     this.$store.dispatch('app/init');
+  },
+
+  methods: {
+    isDarkModeEnabled() {
+      return window.localStorage.getItem('darkMode') == 'true' ? true : false
+    }
   }
 }
 </script>

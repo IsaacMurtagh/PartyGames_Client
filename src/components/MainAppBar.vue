@@ -8,6 +8,14 @@
 
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
+        
+      <v-list-item >
+        <v-switch
+          v-model="$vuetify.theme.dark"
+          inset
+          label="Dark Mode"
+        ></v-switch>
+      </v-list-item>
         <v-list-item-group>
           <v-list-item
             v-for="(item, i) in items"
@@ -54,6 +62,18 @@ export default {
         },
       ],
       selected: this.$route.path,
+    }
+  },
+
+  computed: {
+    darkMode() {
+      return this.$vuetify.theme.dark;
+    }
+  },
+
+  watch: {
+    darkMode() {
+      window.localStorage.setItem('darkMode', this.darkMode);
     }
   },
 
