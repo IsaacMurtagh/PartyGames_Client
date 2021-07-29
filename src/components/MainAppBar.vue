@@ -8,6 +8,14 @@
 
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
+        
+      <v-list-item >
+        <v-switch
+          v-model="$vuetify.theme.dark"
+          inset
+          label="Dark Mode"
+        ></v-switch>
+      </v-list-item>
         <v-list-item-group>
           <v-list-item
             v-for="(item, i) in items"
@@ -38,22 +46,34 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'mdi-inbox',
+          icon: 'mdi-home',
           text: 'Home',
           route: '/'
         },
         {
-          icon: 'mdi-inbox',
+          icon: 'mdi-pencil',
           text: 'Create game',
           route: '/create-game'
         },
         {
-          icon: 'mdi-star',
+          icon: 'mdi-account-multiple-plus',
           text: 'Join game',
           route: '/join-game'
         },
       ],
       selected: this.$route.path,
+    }
+  },
+
+  computed: {
+    darkMode() {
+      return this.$vuetify.theme.dark;
+    }
+  },
+
+  watch: {
+    darkMode() {
+      window.localStorage.setItem('darkMode', this.darkMode);
     }
   },
 

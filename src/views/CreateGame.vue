@@ -27,7 +27,7 @@
                         <li>Create a room for this game mode, and then share the link provided with your friends so they can join you.</li>
                         <li>Once all in and you've chosen your names, the host starts the game.</li>
                         <li>Each player is presented with the same set of images, and individually you must choose what you prefer. For example, ice-cream or frozen yogurt.</li>
-                        <li>After 10 rounds, you will all proceed to a summary page where you can analyse results and compare choices!</li>
+                        <li>After the rounds, you will all proceed to a summary page where you can analyse results and compare choices!</li>
                       </ol>
                     </template>
                   </info-dialog>
@@ -44,7 +44,7 @@
                 />
             </v-card>
             <v-col>
-              <v-btn width="66%" type="submit" :loading="createGameLoading" class="block">
+              <v-btn width="66%" type="submit" :loading="createGameLoading" class="block primary">
                 Continue
               </v-btn>
             </v-col>
@@ -91,7 +91,8 @@ export default {
         await this.$store.dispatch('game/createGame', {
           name: this.roomName,
           type: 'WouldYouRather',
-          roundTimeSeconds: 7,
+          roundTimeSeconds: 5,
+          numberRounds: 8,
         });
         this.game && this.$router.push(`/game/${this.game.id}`);
       }

@@ -13,7 +13,7 @@
                 <li>Create a room for this game mode, and then share the link provided with your friends so they can join you.</li>
                 <li>Once all in and you've chosen your names, the host starts the game.</li>
                 <li>Each player is presented with the same set of images, and individually you must choose what you prefer. For example, ice-cream or frozen yogurt.</li>
-                <li>After 10 rounds, you will all proceed to a summary page where you can analyse results and compare choices!</li>
+                <li>After the rounds, you will all proceed to a summary page where you can analyse results and compare choices!</li>
               </ol>
             </template>
           </info-dialog>

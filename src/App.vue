@@ -16,12 +16,14 @@ export default {
   },
 
   created() {
+    this.$vuetify.theme.dark = this.isDarkModeEnabled()
     this.$store.dispatch('app/init');
+  },
+
+  methods: {
+    isDarkModeEnabled() {
+      return window.localStorage.getItem('darkMode') == 'true' ? true : false
+    }
   }
 }
 </script>
-<style>
-div > .v-application--wrap {
-  min-height: 80vh;
-}
-</style>
