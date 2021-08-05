@@ -1,7 +1,11 @@
 <template>
   <div>
-    <v-app-bar app>
-      <v-app-bar-title @click="$router.push('/')">Party Games</v-app-bar-title>
+    <v-app-bar app color="secondary">
+      <v-app-bar-title 
+        aria-label="party games" 
+        class="cursor-pointer"
+        primary
+      ><span @click="goToRoute('/')">🎉🕹</span></v-app-bar-title>
       <v-spacer />
       <v-app-bar-nav-icon right @click="drawer = !drawer" />
     </v-app-bar>
@@ -84,7 +88,12 @@ export default {
       if (currentRoute != route) {
         this.$router.push(route);
       }
-    }
+    },
   }
 }
 </script>
+<style scoped>
+  .cursor-pointer {
+    cursor: pointer;
+  }
+</style>

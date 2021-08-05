@@ -29,13 +29,31 @@
         <player-avatar :player="participant" />
       </v-col>
     </v-row>
-    <v-row class="pt-12">
-      <v-col align="center">
-        <v-btn v-if="!!myPlayer" @click="startGame">
-          Start
+    <v-bottom-navigation 
+      absolute
+      :input-value="!!myDisplayName"
+    >
+        <v-spacer />
+        <v-btn @click="copyGameLink">
+          <span>Share Link</span>
+          <v-icon>mdi-clipboard-text</v-icon>
         </v-btn>
-      </v-col>
-    </v-row>
+        <v-spacer />
+        <v-btn :disbled="!myPlayer" @click="startGame">
+          <span>Start Game</span>
+          <v-icon>mdi-door-open</v-icon>
+        </v-btn>
+        <v-spacer />
+    </v-bottom-navigation>
+    <v-snackbar
+      :timeout="2000"
+      :value="displayCopySnack"
+      center
+      shaped
+      top
+    >
+      Game link copied, share with your friends.
+    </v-snackbar>
   </v-container>
 </template>
 <script>
@@ -45,7 +63,13 @@ import PlayerAvatar from '@/components/PlayerAvatar';
 import InfoDialog from '@/components/InfoDialog';
 
 export default {
-  name: 'GameScreen',
+  name: 'GameLobby',
+
+  data() {
+    return {
+      displayCopySnack: false,
+    }
+  },
 
   components: {
     PlayerAvatar,
@@ -54,7 +78,7 @@ export default {
 
   computed: {
     ...mapState('game', ['game']),
-    ...mapGetters('game', ['participantsAsList', 'myPlayer']),
+    ...mapGetters('game', ['participantsAsList', 'myPlayer', 'myDisplayName']),
     ...mapGetters('webSocket', ['connected']),
     
     gameType() {
@@ -65,6 +89,11 @@ export default {
   methods: {
     startGame() {
       this.$store.dispatch('webSocket/startGame');
+    },
+
+    copyGameLink() {
+      this.displayCopySnack = true;
+      navigator.clipboard.writeText(window.location.href);
     }
   }
 }
