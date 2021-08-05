@@ -42,6 +42,31 @@
                   prepend-inner-icon="mdi-home"
                   solo
                 />
+                <v-expansion-panels>
+                  <v-expansion-panel>
+                    <v-expansion-panel-header>
+                        Advanced Settings
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                      <v-slider
+                        v-model="numberRounds"
+                        :max="maxNumberRounds"
+                        :min="1"
+                        label="Num Rounds"
+                        thumb-label="always"
+                        ticks
+                      />
+                      <v-slider
+                        v-model="roundTimeSeconds"
+                        :max="maxRoundTimeSeconds"
+                        :min="3"
+                        label="Seconds per round"
+                        thumb-label="always"
+                        ticks
+                      />
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
             </v-card>
             <v-col>
               <v-btn width="66%" type="submit" :loading="createGameLoading" class="block primary">
@@ -60,6 +85,7 @@ import InfoDialog from '../components/InfoDialog';
 import { mapState } from 'vuex';
 
 const maxLengthRoomName = 16;
+const maxTotalTimeSeconds = 120;
 
 export default {
   name: 'CreateGame',
@@ -76,11 +102,21 @@ export default {
         v => !!v || 'Name is required',
         v => v.length <= maxLengthRoomName || `Room name cannot be more than ${maxLengthRoomName} characters`,
       ],
+      numberRounds: 8,
+      roundTimeSeconds: 8,
     }
   },
 
   computed: {
     ...mapState('game', ['createGameLoading', 'game']),
+
+    maxNumberRounds() {
+      return Math.min(15, Math.floor(maxTotalTimeSeconds / this.roundTimeSeconds));
+    },
+
+    maxRoundTimeSeconds() {
+      return Math.min(15, Math.floor(maxTotalTimeSeconds / this.numberRounds));
+    }
   },
 
   methods: {
@@ -91,8 +127,8 @@ export default {
         await this.$store.dispatch('game/createGame', {
           name: this.roomName,
           type: 'WouldYouRather',
-          roundTimeSeconds: 5,
-          numberRounds: 8,
+          roundTimeSeconds: this.roundTimeSeconds,
+          numberRounds: this.numberRounds,
         });
         this.game && this.$router.push(`/game/${this.game.id}`);
       }
