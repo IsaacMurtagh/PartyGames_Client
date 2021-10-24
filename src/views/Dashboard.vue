@@ -1,7 +1,7 @@
 <template>
   <div 
     class="h-full pb-12"
-    :class="darkMode ? 'background-dark' : 'background-light'"
+    :class="{ 'background-dark': darkMode }"
   >
     <main-app-bar />
     <v-container fill-height class="pt-8">
@@ -13,7 +13,7 @@
                 type="text"
                 v-model="joinGameInput"
                 hide-details
-                placeholder="e.g. 'c049537d-d...'"
+                placeholder="Get this off your friend after they've created a lobby"
                 label="Game Pin"
                 prepend-inner-icon="mdi-account-arrow-right-outline"
                 solo
@@ -80,14 +80,8 @@ export default {
   height: 33%
 }
 
-.background-light {
-  background: url('../images/Direct.svg')
-    center center fixed !important;
-  background-size: cover;
-}
 .background-dark {
-  background: url('../images/Nostalgia.svg')
-    center center fixed !important;
+
   background-color: rgb(18, 18, 18) !important;
   background-size: cover;
 }
